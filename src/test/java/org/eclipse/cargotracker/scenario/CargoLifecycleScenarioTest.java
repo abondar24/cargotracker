@@ -1,8 +1,6 @@
 package org.eclipse.cargotracker.scenario;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+
 
 import java.util.Arrays;
 import java.util.Date;
@@ -35,7 +33,9 @@ import org.eclipse.cargotracker.domain.model.voyage.Voyage;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageNumber;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageRepository;
 import org.eclipse.cargotracker.domain.service.RoutingService;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class CargoLifecycleScenarioTest {
 
@@ -105,9 +105,9 @@ public class CargoLifecycleScenarioTest {
 		 * the cargo aggregate in a suitable way.
 		 */
 		Cargo cargo = cargoRepository.find(trackingId);
-		org.junit.Assert.assertNotNull(cargo);
-		Assert.assertEquals(TransportStatus.NOT_RECEIVED, cargo.getDelivery().getTransportStatus());
-		Assert.assertEquals(RoutingStatus.NOT_ROUTED, cargo.getDelivery().getRoutingStatus());
+		assertNotNull(cargo);
+		assertEquals(TransportStatus.NOT_RECEIVED, cargo.getDelivery().getTransportStatus());
+		assertEquals(RoutingStatus.NOT_ROUTED, cargo.getDelivery().getRoutingStatus());
 		assertFalse(cargo.getDelivery().isMisdirected());
 		assertNull(cargo.getDelivery().getEstimatedTimeOfArrival());
 		assertNull(cargo.getDelivery().getNextExpectedActivity());
@@ -128,7 +128,7 @@ public class CargoLifecycleScenarioTest {
 
 		assertEquals(TransportStatus.NOT_RECEIVED, cargo.getDelivery().getTransportStatus());
 		assertEquals(RoutingStatus.ROUTED, cargo.getDelivery().getRoutingStatus());
-		org.junit.Assert.assertNotNull(cargo.getDelivery().getEstimatedTimeOfArrival());
+		assertNotNull(cargo.getDelivery().getEstimatedTimeOfArrival());
 		assertEquals(new HandlingActivity(HandlingEvent.Type.RECEIVE, SampleLocations.HONGKONG),
 				cargo.getDelivery().getNextExpectedActivity());
 
@@ -177,7 +177,7 @@ public class CargoLifecycleScenarioTest {
 		try {
 			handlingEventService.registerHandlingEvent(DateUtil.toDate("2009-03-05"), trackingId, noSuchVoyageNumber,
 					noSuchUnLocode, HandlingEvent.Type.LOAD);
-			org.junit.Assert.fail("Should not be able to register a handling event with invalid location and voyage");
+			fail("Should not be able to register a handling event with invalid location and voyage");
 		} catch (CannotCreateHandlingEventException expected) {
 		}
 
@@ -186,10 +186,10 @@ public class CargoLifecycleScenarioTest {
 				SampleVoyages.v100.getVoyageNumber(), SampleLocations.TOKYO.getUnLocode(), HandlingEvent.Type.UNLOAD);
 
 		// Check current state - cargo is misdirected!
-		Assert.assertEquals(Voyage.NONE, cargo.getDelivery().getCurrentVoyage());
+		assertEquals(Voyage.NONE, cargo.getDelivery().getCurrentVoyage());
 		assertEquals(SampleLocations.TOKYO, cargo.getDelivery().getLastKnownLocation());
 		assertEquals(TransportStatus.IN_PORT, cargo.getDelivery().getTransportStatus());
-		org.junit.Assert.assertTrue(cargo.getDelivery().isMisdirected());
+		assertTrue(cargo.getDelivery().isMisdirected());
 		assertNull(cargo.getDelivery().getNextExpectedActivity());
 
 		// -- Cargo needs to be rerouted --
@@ -216,8 +216,8 @@ public class CargoLifecycleScenarioTest {
 
 		// TODO [TDD] we can't handle the face that after a reroute, the cargo isn't
 		// misdirected anymore
-		// org.junit.Assert.assertFalse(cargo.isMisdirected());
-		// org.junit.Assert.assertEquals(new HandlingActivity(HandlingEvent.Type.LOAD,
+		// org.junit.assertFalse(cargo.isMisdirected());
+		// org.junit.assertEquals(new HandlingActivity(HandlingEvent.Type.LOAD,
 		// SampleLocations.TOKYO), cargo.getNextExpectedActivity());
 		// -- Cargo has been rerouted, shipping continues --
 		// Load in Tokyo

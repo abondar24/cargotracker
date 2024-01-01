@@ -32,9 +32,7 @@
 
     <jakartaee-api.version>10.0.0</jakartaee-api.version>
 
-    <!-- Arquillian properties -->
-    <arquillian.core.version>1.4.1.Final</arquillian.core.version>
-    <skipTests>true</skipTests>
+
 
     <!-- Codehaus Cargo plugin properties -->
     <cargo.version>1.10.5</cargo.version>
@@ -50,20 +48,7 @@
     </webapp.graphTraversalUrl>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <!-- Arquillian Bill Of Management used to reduce collision between testing
-          dependencies. Using a dependency manager we don't need to specify the version
-          of each Arquillian dependency. -->
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-bom</artifactId>
-        <version>${arquillian.core.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+
 
   <dependencies>
 
@@ -119,28 +104,14 @@
     </dependency>
 
     <!-- Test dependencies -->
-    <!-- TODO: switch to junit jupiter -->
+    <!-- TODO: switch to make all tests runnable via maven -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
 
-    <!-- Arquillian dependencies -->
-    <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Resolvers are needed in the Arquillian tests. This is used for adding
-        all the runtime dependencies inside a testing war. -->
-    <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -156,11 +127,9 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
-        <configuration>
-          <skipTests>${skipTests}</skipTests>
-        </configuration>
+        <version>3.2.3</version>
       </plugin>
 
     </plugins>
@@ -172,14 +141,6 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <dependencies>
-        <dependency>
-          <groupId>fish.payara.arquillian</groupId>
-          <artifactId>arquillian-payara-server-4-remote</artifactId>
-          <version>1.1</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>

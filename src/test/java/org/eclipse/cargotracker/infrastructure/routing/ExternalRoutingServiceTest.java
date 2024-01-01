@@ -1,8 +1,5 @@
 package org.eclipse.cargotracker.infrastructure.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -14,10 +11,13 @@ import org.eclipse.cargotracker.domain.model.cargo.RouteSpecification;
 import org.eclipse.cargotracker.domain.model.cargo.TrackingId;
 import org.eclipse.cargotracker.domain.model.location.Location;
 import org.eclipse.cargotracker.domain.model.location.SampleLocations;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class ExternalRoutingServiceTest {
 
+    //TODO uncomment and add test containers if needed
     private ExternalRoutingService externalRoutingService;
 //    private VoyageRepository voyageRepository;
 
@@ -58,7 +58,7 @@ public class ExternalRoutingServiceTest {
             assertFalse(legs.isEmpty());
 
             // Cargo origin and start of first leg should match
-            Assert.assertEquals(cargo.getOrigin(), legs.get(0).getLoadLocation());
+            assertEquals(cargo.getOrigin(), legs.get(0).getLoadLocation());
 
             // Cargo final destination and last leg stop should match
             Location lastLegStop = legs.get(legs.size() - 1).getUnloadLocation();
