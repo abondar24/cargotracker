@@ -1,9 +1,9 @@
 package org.eclipse.cargotracker.interfaces.handling.file;
 
-import javax.batch.operations.JobOperator;
-import javax.batch.runtime.BatchRuntime;
-import javax.ejb.Schedule;
-import javax.ejb.Stateless;
+import jakarta.batch.operations.JobOperator;
+import jakarta.batch.runtime.BatchRuntime;
+import jakarta.ejb.Schedule;
+import jakarta.ejb.Stateless;
 
 /**
  * Periodically scans a certain directory for files and attempts to parse

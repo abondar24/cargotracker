@@ -3,8 +3,8 @@ package org.eclipse.cargotracker.domain.model.voyage;
 import org.eclipse.cargotracker.domain.model.location.Location;
 import org.apache.commons.lang3.Validate;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

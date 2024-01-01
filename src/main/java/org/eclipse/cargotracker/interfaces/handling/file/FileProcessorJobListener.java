@@ -1,9 +1,9 @@
 package org.eclipse.cargotracker.interfaces.handling.file;
 
-import javax.batch.api.listener.JobListener;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.batch.api.listener.JobListener;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;

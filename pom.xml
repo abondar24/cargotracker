@@ -27,20 +27,20 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
 
-    <javaee_api.version>7.0</javaee_api.version>
+    <jakartaee-api.version>10.0.0</jakartaee-api.version>
 
     <!-- Arquillian properties -->
     <arquillian.core.version>1.4.1.Final</arquillian.core.version>
     <skipTests>true</skipTests>
 
     <!-- Codehaus Cargo plugin properties -->
-    <cargo.version>1.8.1</cargo.version>
-    <cargo.payara.container_id>glassfish4x</cargo.payara.container_id>
+    <cargo.version>1.10.5</cargo.version>
+    <cargo.payara.container_id>glassfish6x</cargo.payara.container_id>
     <cargo.payara.download_uri>
-      https://repo1.maven.org/maven2/fish/payara/distributions/payara/4.1.2.181/payara-4.1.2.181.zip
+      https://repo1.maven.org/maven2/fish/payara/distributions/payara/6.2023.12/payara-6.2023.12.zip
     </cargo.payara.download_uri>
 
     <!-- Application properties -->
@@ -69,9 +69,9 @@
 
     <!-- Jakarta EE API -->
     <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>${javaee_api.version}</version>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>${jakartaee-api.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -104,10 +104,12 @@
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
-      <version>8.0</version>
+      <version>12.0.0</version>
+      <classifier>jakarta</classifier>
     </dependency>
 
     <!-- Test dependencies -->
+    <!-- TODO: switch to junit jupiter -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -172,7 +174,7 @@
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
+            <artifactId>cargo-maven3-plugin</artifactId>
             <version>${cargo.version}</version>
             <configuration>
               <container>

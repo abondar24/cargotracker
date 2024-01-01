@@ -1,6 +1,6 @@
 package org.eclipse.cargotracker.application.util;
 
-import javax.ws.rs.ApplicationPath;
+import jakarta.ws.rs.ApplicationPath;
 
 import org.eclipse.cargotracker.interfaces.booking.rest.CargoMonitoringService;
 import org.eclipse.cargotracker.interfaces.handling.rest.HandlingReportService;

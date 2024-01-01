@@ -6,16 +6,16 @@
 
 	<!-- Overriding system level defaults is a decent usage of XML. -->
 	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-name>jakarta.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
 	<context-param>
-		<param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+		<param-name>jakarta.faces.CLIENT_WINDOW_MODE</param-name>
 		<param-value>url</param-value>
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>omega</param-value>
+		<param-value>saga</param-value>
 	</context-param>
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
@@ -45,7 +45,7 @@
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -70,36 +70,36 @@
 		be more operations friendly and help make deployment even faster. -->
 	<data-source>
 		<name>java:app/jdbc/CargoTrackerDatabase</name>
-		<class-name>org.apache.derby.jdbc.EmbeddedDriver</class-name>
-		<url>jdbc:derby:${webapp.databaseTempDir}/cargo-tracker-database;create=true</url>
+		<class-name>org.h2.Driver</class-name>
+		<url>jdbc:h2:mem:cargo-tracker-database</url>
 	</data-source>
 	<jms-destination>
 		<name>java:app/jms/CargoHandledQueue</name>
-		<interface-name>javax.jms.Queue</interface-name>
+		<interface-name>jakarta.jms.Queue</interface-name>
 		<resource-adapter>jmsra</resource-adapter>
 		<destination-name>CargoHandledQueue</destination-name>
 	</jms-destination>
 	<jms-destination>
 		<name>java:app/jms/MisdirectedCargoQueue</name>
-		<interface-name>javax.jms.Queue</interface-name>
+		<interface-name>jakarta.jms.Queue</interface-name>
 		<resource-adapter>jmsra</resource-adapter>
 		<destination-name>MisdirectedCargoQueue</destination-name>
 	</jms-destination>
 	<jms-destination>
 		<name>java:app/jms/DeliveredCargoQueue</name>
-		<interface-name>javax.jms.Queue</interface-name>
+		<interface-name>jakarta.jms.Queue</interface-name>
 		<resource-adapter>jmsra</resource-adapter>
 		<destination-name>DeliveredCargoQueue</destination-name>
 	</jms-destination>
 	<jms-destination>
 		<name>java:app/jms/RejectedRegistrationAttemptsQueue</name>
-		<interface-name>javax.jms.Queue</interface-name>
+		<interface-name>jakarta.jms.Queue</interface-name>
 		<resource-adapter>jmsra</resource-adapter>
 		<destination-name>RejectedRegistrationAttemptsQueue</destination-name>
 	</jms-destination>
 	<jms-destination>
 		<name>java:app/jms/HandlingEventRegistrationAttemptQueue</name>
-		<interface-name>javax.jms.Queue</interface-name>
+		<interface-name>jakarta.jms.Queue</interface-name>
 		<resource-adapter>jmsra</resource-adapter>
 		<destination-name>HandlingEventRegistrationAttemptQueue</destination-name>
 	</jms-destination>

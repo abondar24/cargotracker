@@ -5,7 +5,7 @@ import org.eclipse.pathfinder.api.GraphTraversalService;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import javax.ws.rs.ApplicationPath;
+import jakarta.ws.rs.ApplicationPath;
 
 /**
  * JAX-RS configuration.
