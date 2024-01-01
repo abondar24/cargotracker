@@ -27,6 +27,7 @@ import org.eclipse.cargotracker.interfaces.booking.facade.internal.assembler.Car
 import org.eclipse.cargotracker.interfaces.booking.facade.internal.assembler.CargoStatusDtoAssembler;
 import org.eclipse.cargotracker.interfaces.booking.facade.internal.assembler.ItineraryCandidateDtoAssembler;
 import org.eclipse.cargotracker.interfaces.booking.facade.internal.assembler.LocationDtoAssembler;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 
 @ApplicationScoped
 public class DefaultBookingServiceFacade implements BookingServiceFacade, Serializable {
@@ -48,11 +49,16 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade, Serial
 	@Inject
 	private HandlingEventRepository handlingEventRepository;
 
+	@Fallback(fallbackMethod = "listShippingLocationsFallback")
 	@Override
 	public List<org.eclipse.cargotracker.interfaces.booking.facade.dto.Location> listShippingLocations() {
 		List<Location> allLocations = locationRepository.findAll();
 		LocationDtoAssembler assembler = new LocationDtoAssembler();
 		return assembler.toDtoList(allLocations);
+	}
+
+	private List<org.eclipse.cargotracker.interfaces.booking.facade.dto.Location> listShippingLocationsFallback(){
+		return List.of();
 	}
 
 	@Override

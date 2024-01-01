@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import jakarta.annotation.Resource;
 import jakarta.ejb.Stateless;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -24,6 +25,8 @@ import org.eclipse.cargotracker.domain.model.location.UnLocode;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageNumber;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageRepository;
 import org.eclipse.cargotracker.domain.service.RoutingService;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.pathfinder.api.TransitEdge;
 import org.eclipse.pathfinder.api.TransitPath;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
@@ -56,6 +59,8 @@ public class ExternalRoutingService implements RoutingService {
 		graphTraversalResource.register(new MoxyJsonFeature()).register(new JsonMoxyConfigurationContextResolver());
 	}
 
+	@Timeout(value=2000)
+	@Retry(maxRetries = 2, delay = 250)
 	@Override
 	public List<Itinerary> fetchRoutesForSpecification(RouteSpecification routeSpecification) {
 		// The RouteSpecification is picked apart and adapted to the external API.
