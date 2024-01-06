@@ -30,7 +30,7 @@ public class BaseIntegrationTest {
             .withCopyFileToContainer(warFile, "/opt/payara/deployments/cargo-tracker.war")
             .withExposedPorts(8080)
             .waitingFor(Wait.forHttp("/cargo-tracker"))
-            .withStartupTimeout(Duration.ofSeconds(500))
+            .withStartupTimeout(Duration.ofSeconds(200))
             .withLogConsumer(new Slf4jLogConsumer(LOGGER));
 
 
