@@ -58,7 +58,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- TODO: remove and use proper rest with servlet 3,0 and no web.xml-->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
@@ -66,8 +65,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- TODO: remove -->
-        <!-- TODO: update code to match jdk21  standards -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
@@ -109,7 +106,6 @@
         </dependency>
 
         <!-- Test dependencies -->
-        <!-- TODO: switch Itests to test containers  -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

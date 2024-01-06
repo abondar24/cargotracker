@@ -13,19 +13,8 @@ import org.eclipse.cargotracker.domain.model.location.SampleLocations;
 import org.eclipse.cargotracker.domain.model.location.UnLocode;
 import org.eclipse.cargotracker.domain.model.voyage.Voyage;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.MountableFile;
 
-import java.nio.file.Paths;
-import java.time.Duration;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +39,10 @@ public class BookingServiceTest extends BaseIntegrationTest {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @AfterAll
+    static void shutdown() {
+        cargoContainer.stop();
+    }
 
     @Test
     public void testRegisterNew() {
@@ -154,10 +147,5 @@ public class BookingServiceTest extends BaseIntegrationTest {
         assertEquals(Delivery.NO_ACTIVITY, cargo.getDelivery().getNextExpectedActivity());
         assertFalse(cargo.getDelivery().isUnloadedAtDestination());
         assertEquals(RoutingStatus.MISROUTED, cargo.getDelivery().getRoutingStatus());
-    }
-
-    @AfterAll
-    static void shutdown(){
-        cargoContainer.stop();
     }
 }
