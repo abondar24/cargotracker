@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.cargotracker.BaseIntegrationTest;
 import org.eclipse.cargotracker.application.ApplicationEvents;
 import org.eclipse.cargotracker.application.BookingService;
 import org.eclipse.cargotracker.application.CargoInspectionService;
@@ -33,11 +34,13 @@ import org.eclipse.cargotracker.domain.model.voyage.Voyage;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageNumber;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageRepository;
 import org.eclipse.cargotracker.domain.service.RoutingService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class CargoLifecycleScenarioTest {
+public class CargoLifecycleScenarioTest extends BaseIntegrationTest {
 
 	/**
 	 * Repository implementations are part of the infrastructure layer, which in
@@ -77,6 +80,7 @@ public class CargoLifecycleScenarioTest {
 	 */
 	RoutingService routingService;
 
+	@Test
 	public void testCargoFromHongkongToStockholm() throws Exception {
 		/*
 		 * Test setup: A cargo should be shipped from Hongkong to
@@ -289,43 +293,29 @@ public class CargoLifecycleScenarioTest {
 		return itineraries.get(0);
 	}
 
-	protected void setUp() throws Exception {
-		routingService = new RoutingService() {
-			public List<Itinerary> fetchRoutesForSpecification(RouteSpecification routeSpecification) {
-				if (routeSpecification.getOrigin().equals(SampleLocations.HONGKONG)) {
-					// Hongkong - NYC - Chicago - SampleLocations.STOCKHOLM, initial routing
-					return Arrays.asList(new Itinerary(Arrays.asList(
-							new Leg(SampleVoyages.v100, SampleLocations.HONGKONG, SampleLocations.NEWYORK,
-									DateUtil.toDate("2009-03-03"), DateUtil.toDate("2009-03-09")),
-							new Leg(SampleVoyages.v200, SampleLocations.NEWYORK, SampleLocations.CHICAGO,
-									DateUtil.toDate("2009-03-10"), DateUtil.toDate("2009-03-14")),
-							new Leg(SampleVoyages.v200, SampleLocations.CHICAGO, SampleLocations.STOCKHOLM,
-									DateUtil.toDate("2009-03-07"), DateUtil.toDate("2009-03-11")))));
-				} else {
-					// Tokyo - Hamburg - SampleLocations.STOCKHOLM, rerouting misdirected cargo from
-					// Tokyo
-					return Arrays.asList(new Itinerary(Arrays.asList(
-							new Leg(SampleVoyages.v300, SampleLocations.TOKYO, SampleLocations.HAMBURG,
-									DateUtil.toDate("2009-03-08"), DateUtil.toDate("2009-03-12")),
-							new Leg(SampleVoyages.v400, SampleLocations.HAMBURG, SampleLocations.STOCKHOLM,
-									DateUtil.toDate("2009-03-14"), DateUtil.toDate("2009-03-15")))));
-				}
-			}
-		};
+	@BeforeEach
+	void setUp() throws Exception {
+		routingService = routeSpecification -> {
+            if (routeSpecification.getOrigin().equals(SampleLocations.HONGKONG)) {
+                // Hongkong - NYC - Chicago - SampleLocations.STOCKHOLM, initial routing
+                return Arrays.asList(new Itinerary(Arrays.asList(
+                        new Leg(SampleVoyages.v100, SampleLocations.HONGKONG, SampleLocations.NEWYORK,
+                                DateUtil.toDate("2009-03-03"), DateUtil.toDate("2009-03-09")),
+                        new Leg(SampleVoyages.v200, SampleLocations.NEWYORK, SampleLocations.CHICAGO,
+                                DateUtil.toDate("2009-03-10"), DateUtil.toDate("2009-03-14")),
+                        new Leg(SampleVoyages.v200, SampleLocations.CHICAGO, SampleLocations.STOCKHOLM,
+                                DateUtil.toDate("2009-03-07"), DateUtil.toDate("2009-03-11")))));
+            } else {
+                // Tokyo - Hamburg - SampleLocations.STOCKHOLM, rerouting misdirected cargo from
+                // Tokyo
+                return Arrays.asList(new Itinerary(Arrays.asList(
+                        new Leg(SampleVoyages.v300, SampleLocations.TOKYO, SampleLocations.HAMBURG,
+                                DateUtil.toDate("2009-03-08"), DateUtil.toDate("2009-03-12")),
+                        new Leg(SampleVoyages.v400, SampleLocations.HAMBURG, SampleLocations.STOCKHOLM,
+                                DateUtil.toDate("2009-03-14"), DateUtil.toDate("2009-03-15")))));
+            }
+        };
 
-//        applicationEvents = new SynchronousApplicationEventsStub();
-		// In-memory implementations of the repositories
-//        handlingEventRepository = new HandlingEventRepositoryInMem();
-//        cargoRepository = new CargoRepositoryInMem();
-//        locationRepository = new LocationRepositoryInMem();
-//        voyageRepository = new VoyageRepositoryInMem();
-		// Actual factories and application services, wired with stubbed or in-memory
-		// infrastructure
-//        handlingEventFactory = new HandlingEventFactory(cargoRepository, voyageRepository, locationRepository);
-//        cargoInspectionService = new CargoInspectionServiceImpl(applicationEvents, cargoRepository, handlingEventRepository);
-//        handlingEventService = new DefaultHandlingEventService(handlingEventRepository, applicationEvents, handlingEventFactory);
-//        bookingService = new BookingServiceImpl(cargoRepository, locationRepository, routingService);
-		// Circular dependency when doing synchrounous calls
-//        ((SynchronousApplicationEventsStub) applicationEvents).setCargoInspectionService(cargoInspectionService);
+
 	}
 }

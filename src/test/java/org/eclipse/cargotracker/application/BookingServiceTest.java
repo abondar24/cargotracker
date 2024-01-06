@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.apache.commons.lang3.time.DateUtils;
+import org.eclipse.cargotracker.BaseIntegrationTest;
 import org.eclipse.cargotracker.domain.model.cargo.*;
 import org.eclipse.cargotracker.domain.model.handling.HandlingEvent;
 import org.eclipse.cargotracker.domain.model.location.Location;
@@ -37,11 +38,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * with the default user name and password.
  */
 //TODO [Jakarta EE 8] Move to the Java Date-Time API for date manipulation. Also avoid hard-coded dates.
-@Testcontainers
-@Tag("integration")
-public class BookingServiceTest  {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookingServiceTest.class);
+public class BookingServiceTest extends BaseIntegrationTest {
 
     private static TrackingId trackingId;
     private static List<Itinerary> candidates;
@@ -51,19 +49,6 @@ public class BookingServiceTest  {
     private BookingService bookingService;
     @PersistenceContext
     private EntityManager entityManager;
-
-    private static final MountableFile warFile = MountableFile.forHostPath(
-            Paths.get("target/cargo-tracker.war").toAbsolutePath(), 511);
-
-
-    @Container
-    private static GenericContainer<?> cargoContainer = new GenericContainer<>("payara/server-full")
-            .withCopyFileToContainer(warFile, "/opt/payara/deployments/cargo-tracker.war")
-            .withExposedPorts(8080)
-            .waitingFor(Wait.forHttp("/cargo-tracker"))
-            .withStartupTimeout(Duration.ofSeconds(200))
-            .withLogConsumer(new Slf4jLogConsumer(LOGGER));
-
 
 
     @Test
