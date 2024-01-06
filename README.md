@@ -46,6 +46,11 @@ Similarly you can run using Open Liberty using the following command:
 mvn clean package -Popenliberty liberty:run
 ```
 
+To run integration tests with test containers
+```
+mvn clean test -Pintegration
+```
+
 To set up in Visual Studio Code, follow these steps:
 
 * Set up Java SE 11, or Java SE 17, [Visual Studio Code](https://code.visualstudio.com/download) and [Payara 6](https://www.payara.fish/downloads/payara-platform-community-edition/). You will also need to set up the [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) and [Payara Tools](https://marketplace.visualstudio.com/items?itemName=Payara.payara-vscode) in Visual Studio Code.
